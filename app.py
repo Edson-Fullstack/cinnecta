@@ -33,8 +33,11 @@ def contar(vetores,vocabulario,gramatica):
     if(gramatica=='gram2'):
         for i in range(len(vocabulario)-1):
             itens=vocabulario[i].split(' ')
-            tests(1,itens)
-            dicionario['texto'+str(i+1)+vocabulario[i]]=vetores[i].count(itens[0])+vetores[i].count(itens[1])
+            key='texto'
+            for j in range(len(itens)):  
+                key=key+str(itens[j])
+                tests(1,key)
+                dicionario[key]+=vetores[j].count(itens[j])
             
                 
 
