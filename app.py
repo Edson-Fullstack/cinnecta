@@ -1,7 +1,7 @@
 from flask import Flask , render_template
 
 #esta varialvel e funcão controlam o debug passo a passo no ambiente de testes
-TEST_CONTROL=1
+TEST_CONTROL=0
 def tests(controle,mensagem):
     """mensagem a ser exibida no durante testes"""
     if(TEST_CONTROL>=controle):
@@ -21,26 +21,30 @@ def substituir_caracteres(old_string, to_remove,to_replace):
     return new_string.lower()
 
 
+def contar_incidencia(vetor,vocabulario):
+    dicionario=dict()
+    for i in range(len(vetor)):
+        for item in vocabulario:
+            dicionario['texto'+str(i+1)+vocabulario[item]]=vetor[i].count(vocabulario[item])
+    return dicionario
 
 #conta os elementos e armazena em um dicionario 
 #!utiliza como indice uma concatenação entre o indice do vetor e o item ao qual se esta procurando
 def contar(vetores,vocabulario,gramatica):
+
     dicionario=dict()
     if(gramatica=='gram1'):
-        for i in range(len(vetores)):
-            for item in vocabulario:
-                dicionario['texto'+str(i+1)+vocabulario[item]]=vetores[i].count(vocabulario[item])
+       dicionario=contar_incidencia(vetores,vocabulario)
     if(gramatica=='gram2'):
-        for i in range(len(vocabulario)-1):
+        for i in range(len(vocabulario)):
             itens=vocabulario[i].split(' ')
-            key='texto'
-            for j in range(len(itens)):  
-                key=key+str(itens[j])
-                tests(1,key)
-                dicionario[key]+=vetores[j].count(itens[j])
-            
-                
-
+            tests(0,itens)
+            key='texto'+str(i+1)+str(str(itens).split(" ,\'\\"))
+            for j in itens:
+                tests(0,j)
+                tests(0,key)
+                #dicionario[key]+=vetores[j].count(vocabulario[i])
+    tests(0,"Incidencia:"+str(dicionario))
     
     tests(1,'Dicionario:'+str(dicionario)) 
     return 
@@ -82,7 +86,7 @@ def gerar_listas_simples(textos,stop_words,gramatica):
                 j=j+1
             else:
                 tests(2,'Remove:'+vector[i][item])
-    tests(1,'Vocabulario'+gramatica+'['+str(len(vocabulario))+']:'+str(vocabulario))
+    tests(0,'Vocabulario'+gramatica+'['+str(len(vocabulario))+']:'+str(vocabulario))
     
     return vocabulario,vector
 
