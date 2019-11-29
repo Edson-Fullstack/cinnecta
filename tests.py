@@ -15,3 +15,5 @@ class TestFatorial(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+    resultProva=['falar', 'é' , 'fácil' ,'mostre' , 'me' , 'o' , 'código' , 'escrever' , 'difícil' , 'que' , 'funcione']
+    e=['Falar é fácil. Mostre-me o código.','É fácil escrever código. Difícil é escrever código que funcione.']
