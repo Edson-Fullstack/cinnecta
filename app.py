@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask , render_template
 
 
 #remove caracteres e retorna toda a string em lower case
@@ -8,7 +8,7 @@ def Remover_Caracteres(old_string, to_remove):
         new_string = new_string.replace(i, '')
     return new_string.lower()
 
-#tratamento para - de palavras compostas
+#tratamento para '-' de palavras compostas
 def Substituir_Caracteres(old_string, to_remove,to_replace):
     new_string = old_string
     for i in to_remove:
@@ -53,44 +53,59 @@ def Contar_E_Ignorar(vetores,listaPalavras,stopWords):
 
 #Formata a saida para mostra o vocabulario e os vetores de incidencia
 def Formatar_Saida(listaPalavras,vetores,lista):
+    
+    dic=dict()
+    dic['vocabularioindex']='Vocabulário:'
+    resultLista=''
     i=1
-    resultLista='Vocabulário:<br>'
     for item in listaPalavras:
-        resultLista=resultLista+str(i)+'.'+item+'<br>'
+        resultLista=resultLista+str(i)+'.'+item+' '
         i+=1
+    i=0
+    dic['vocabulario']=resultLista
     for i in range(len(vetores)):
         #print pra facilitar a vizualização dos elementos em produção
         #print('Vetor De Incidencia['+str(i)+']:'+str(vetores[i]))
-        retorno='texto '+str(i)+' :['
+        index='texto'+str(i+1)
+        retorno=index+' :['
         j=0
         for item in listaPalavras:
             retorno=retorno+str(lista[str(i)+str(item)])
             j+=1
             if(j < len(listaPalavras)):
                 retorno=retorno+','
-        retorno=retorno+']<br>'
-        resultLista=resultLista+retorno
-    return resultLista
-
+        retorno=retorno+']'
+        dic[index]=retorno
+    return dic
 #função principal para execução da primeira parte do exercicio
 def Gramatica(textos,stopWords):
     listaPalavras,vector=Gerar_Listas_Simples(textos)
     #gerar teste com resultados da parte 1// 
     contagem=Contar_E_Ignorar(vector,listaPalavras,stopWords)
-    saida=Formatar_Saida(listaPalavras,vector,contagem)
-    return saida 
-app = Flask(__name__)
+    formatado=Formatar_Saida(listaPalavras,vector,contagem)
+    return formatado 
+    
+myapp = Flask(__name__)
 
 #home page
-@app.route("/gram")
+@myapp.route("/")
 def cinnecta():
+    return render_template('index.html')
+@myapp.route("/test")
+def test():
+    return render_template('test.html')
+@myapp.route("/gram1")
+def cinnecta1():
     #entrada esperada
     e=['Falar é fácil. Mostre-me o código.','É fácil escrever código. Difícil é escrever código que funcione.']
     #StopWords adicionadas em um vetor
     stopWords='',''
-    return Gramatica(e,stopWords)
+    vocabulario=Gramatica(e,stopWords)
+    print(vocabulario)
 
-@app.route("/gram2")
+    return render_template('lista.html',format=vocabulario)
+        
+@myapp.route("/gram2")
 def cinnecta2():
     #entrada esperada
     e=['Falar é fácil. Mostre-me o código.','É fácil escrever código. Difícil é escrever código que funcione.']
@@ -100,4 +115,4 @@ def cinnecta2():
 
 
 if __name__=="__main__":
-    app.run()
+    myapp.run()
