@@ -1,8 +1,7 @@
 #teste
 from flask import Flask
-from flask import jsonify
+from collections import defaultdict
 #contar elementos
-from collections import Counter
 import json
 def fatorial(numero):
     if numero in (0, 1):
@@ -20,8 +19,7 @@ def Substituir_Caracteres(old_string, to_remove,to_replace):
     for i in to_remove:
         new_string = new_string.replace(i, to_replace)
     return new_string.lower()
-def Contar_Palavras(vector):
-    print(Counter(vector))
+
 
 def Gerar_Listas_Simples(textos):
     deletarCaracteres=',!.'
@@ -35,13 +33,9 @@ def Gerar_Listas_Simples(textos):
         vector[index]=Substituir_Caracteres(vector[index],substituirCaracteres[0],substituirCaracteres[1])
         vector[index]=vector[index].split(' ')
         index+=1
-    completeText=Remover_Caracteres(textoCompleto,deletarCaracteres)
-    completeText=Substituir_Caracteres(completeText,substituirCaracteres[0],substituirCaracteres[1])
+    completeText=Substituir_Caracteres(textoCompleto,substituirCaracteres[0],substituirCaracteres[1])
+    completeText=Remover_Caracteres(completeText,deletarCaracteres)
     completeText=completeText.split(' ')
-    
-    #for item in stopWords:
-    #    if item in completeText:
-    #        completeText.remove(item)
     listaPalavras=set(completeText)
     if '' in listaPalavras:
         listaPalavras.remove('')
@@ -54,22 +48,35 @@ def Contar_E_Ignorar(vetores,listaPalavras,stopWords):
         for item in listaPalavras:
             if item in stopWords:
                 continue
-            dic[item]=vetores[i].count(item)
-        listas[i]=dic
-    return listas
-def Formatar_Saida(listaPalavras,vetores,lista):
-    print('Lista'+str(len(listaPalavras))+':'+str(listaPalavras))
-    for i in range(len(vetores)):
-        print('Vetor De Incidencia['+str(i)+']:'+str(vetores[i]))
-        print('Lista De Contagem['+str(i)+']:'+str(lista[i]))
+            dic[str(i)+str(item)]=vetores[i].count(item)
+            #print(str(vetores[i])+'palavra:'+item+str(vetores[i].count(item)))
+    return dic
 
+def Formatar_Saida(listaPalavras,vetores,lista):
+    i=1
+    resultLista=''
+    for item in listaPalavras:
+        resultLista=resultLista+str(i)+'.'+item+'<br>'
+        i+=1
+    for i in range(len(vetores)):
+        #print('Vetor De Incidencia['+str(i)+']:'+str(vetores[i]))
+        retorno='['
+        j=0
+        for item in listaPalavras:
+            retorno=retorno+str(lista[str(i)+str(item)])
+            j+=1
+            if(j < len(listaPalavras)):
+                retorno=retorno+','
+        retorno=retorno+']<br>'
+        resultLista=resultLista+retorno
+    return resultLista
 
 def Gramatica(textos,stopWords):
     listaPalavras,vector=Gerar_Listas_Simples(textos)
     #gerar teste com resultados da parte 1// 
-    listas=Contar_E_Ignorar(vector,listaPalavras,stopWords)
-    Formatar_Saida(listaPalavras,vector,listas)
-    return 
+    contagem=Contar_E_Ignorar(vector,listaPalavras,stopWords)
+    saida=Formatar_Saida(listaPalavras,vector,contagem)
+    return saida 
 app = Flask(__name__)
 
 #home page
@@ -77,8 +84,7 @@ app = Flask(__name__)
 def cinnecta():
     e=['Falar é fácil. Mostre-me o código.','É fácil escrever código. Difícil é escrever código que funcione.']
     stopWords='',''
-    Gramatica(e,stopWords);
-    return ''
+    return Gramatica(e,stopWords)
 
 
 if __name__=="__main__":
