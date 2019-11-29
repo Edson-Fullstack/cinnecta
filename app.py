@@ -38,15 +38,22 @@ def contar(vetores,vocabulario,gramatica):
     if(gramatica=='gram2'):
         for i in range(len(vocabulario)):
             itens=vocabulario[i].split(' ')
-            tests(0,itens)
+            k=vocabulario[i].replace(' ', '').replace('é','e')
+            tests(0,"vocabulario:"+str(vocabulario[i]))
             key='texto'+str(i+1)+str(str(itens).split(" ,\'\\"))
-            for j in itens:
-                tests(0,j)
-                tests(0,key)
-                #dicionario[key]+=vetores[j].count(vocabulario[i])
+            for j in range(len(itens)):
+                tests(0,"item:"+str(itens[j]));
+                for ii in range(len(vetores)):
+                    tests(0,'vetor:'+str(ii)+':'+str(vetores[ii]))
+                    #tests(0,'item'+str(j)+':'+str(itens[j]))
+                    tests(0,vocabulario[j])
+                    key='texto'+str(ii)+k
+                    tests(0,"key:"+key)
+                    tests(0,vetores[ii].count(itens[j]))
+                    dicionario[str(key)]+=1
     tests(0,"Incidencia:"+str(dicionario))
     
-    tests(1,'Dicionario:'+str(dicionario)) 
+    tests(0,'Dicionario:'+str(dicionario)) 
     return 
 
 #a partir do vetor contendo os textos retorna o vocabulario e os vetores contendo as palavras da frase
