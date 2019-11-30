@@ -111,38 +111,6 @@ def contar_incidencia2(vetores, vocabulario):
     return dicionario
 
 
-# retorna dicionario contendo os vetores com quantas palavras se repetem
-# na analise gramatical 3
-# inicialmente foi um erro de compreenção porem irei deixar por me parece
-# util contar a incidencia de cada palavra independente nos vetores
-def contar_incidencia3(vetores, vocabulario):
-    """entradas de vetores distitos de palavras e vocabulario formado """
-    dicionario = dict()
-    for i in range(len(vocabulario)):
-        itens = vocabulario[i].split(' ')
-        k = vocabulario[i].replace(' ', '-')
-        tests(2, 'loop:' + str(i))
-        for ii in range(len(vetores)):
-            for j in range(len(itens)):
-                key = str(k) + '-' + str(ii + 1)
-                if(i == 0):
-                    tests(2, "key:" + str(key))
-                tests(2, 'vetor:' + str(ii) + ':' + str(vetores[ii]))
-                tests(2, "item:" + str(itens[j]))
-                tests(2, "valor Encontrado:" +
-                      str(vetores[ii].count(itens[j])))
-                if key not in dicionario:
-                    dicionario[str(key)] = vetores[ii].count(itens[j])
-                    tests(2, "valor Na Chave:0")
-                else:
-                    value = dicionario.get(key)
-                    tests(2, "valor Armazenado:" + str(value))
-                    value = int(value) + vetores[ii].count(itens[j])
-                    dicionario[str(key)] = str(value)
-                    tests(2, "valor Na Chave:" + str(value))
-                tests(2, "valor Total:" + str(dicionario[str(key)]))
-    return dicionario
-
 # conta os elementos e armazena em um dicionario
 # !utiliza como indice uma concatenação entre o indice do vetor e o
 # item ao qual se esta procurando
@@ -189,16 +157,12 @@ def gerar_listas_simples(textos, stop_words, gramatica):
             alterar = 0
         if(gramatica == "gram2"):
             alterar = -1
-        if(gramatica == "gram3"):
-            alterar = -1
         # dado o tipo de gramatica altera a forma de pegar as posições
         # da lista de vocabulario
         for item in range(len(vector[i]) + alterar):
             if(gramatica == "gram1"):
                 analise = vector[i][item]
             if(gramatica == "gram2"):
-                analise = vector[i][item] + ' ' + vector[i][item + 1]
-            if(gramatica == "gram3"):
                 analise = vector[i][item] + ' ' + vector[i][item + 1]
             tests(2, 'Analise:' + analise)
             # tratamento para eliminar stopwords e adicionar os elementos
@@ -240,8 +204,8 @@ def processar_texto(textos, stop_words, gramatica):
         item['_id'] = ObjectId(b'' + bytes(key, encoding='utf8'))
         item['content'] = str(vocabulario)
         collection.insert_one(item)
-        tests(0, "items:"+str(collection.count()))
-        tests(0, "items:"+str(collection.find()))
+        tests(2, "items:"+str(collection.count()))
+        tests(2, "items:"+str(collection.find()))
     return
 
 
@@ -261,14 +225,26 @@ def manual():
 
 
 # execução de gramatica 1
-@myapp.route("/gram1")
-def gramatica1():
+# entrada como uma string onde as frases sao divididas por ,
+# utilizar outro dvisor para nao quebra sentidos de frases diferentes(|)
+@myapp.route("/gram1", defaults={'entrada': 'Falar é fácil. Mostre-me o ' +
+                                            'código.|É fácil escrever código' +
+                                            '. Difícil é escrever código que' +
+                                            ' funcione.'})
+@myapp.route("/gram1/<entrada>")
+def gramatica1(entrada):
     # entrada esperada
     # testes efeturado para evitar erro e=[''] e='' e=['',''] todos passam
     # e=False gera erro entao qualque entrada de dados que nao for puder ser
     # mensurada provavelmente ira gerar erro
-    e = ['Falar é fácil. Mostre-me o código.',
-         'É fácil escrever código. Difícil é escrever código que funcione.']
+    e = ['Falar é fácil. Mostre-me o código.|É fácil escrever código.' +
+         ' Difícil é escrever código que funcione.']
+    if(type(entrada) == string and (entrada is None or entrada == '')):
+        e = ['Falar é fácil. Mostre-me o código.|' +
+             'É fácil escrever código. Difícil é escrever ' +
+             'código que funcione.']
+    else:
+        e = entrada.split('|')
     # StopWords adicionadas em um vetor
     stop_words = '', ''
     vocabulario = processar_texto(e, stop_words, 'gram1')
@@ -276,39 +252,35 @@ def gramatica1():
 
 
 # execução de gramatica 2
-@myapp.route("/gram2")
-def gramatica2():
+@myapp.route("/gram2", defaults={'entrada': 'Falar é fácil. Mostre-me o ' +
+                                 'código.|É fácil escrever código. Difícil é' +
+                                 ' escrever código que funcione.'})
+@myapp.route("/gram2/<entrada>")
+def gramatica2(entrada):
     # entrada esperada
-    e = ['Falar é fácil. Mostre-me o código.',
-         'É fácil escrever código. Difícil é escrever código que funcione.']
+    e = ['Falar é fácil. Mostre-me o código.|É fácil escrever código.' +
+         'Difícil é escrever código que funcione.']
+    if(type(entrada) == string and (entrada is None or entrada == '')):
+        e = ['Falar é fácil. Mostre-me o código.|É fácil escrever código.' +
+             'Difícil é escrever código que funcione.']
+    else:
+        e = entrada.split('|')
     # StopWords adicionadas em um vetor
     stop_words = '', ''
     vocabulario = processar_texto(e, stop_words, 'gram2')
     return render_template('lista.html')
 
 
-# execução de gramatica 2(criada a pardir de erro de produção)
-@myapp.route("/gram3")
-def gramatica3():
-    # entrada esperada
-    e = ['Falar é fácil. Mostre-me o código.',
-         'É fácil escrever código. Difícil é escrever código que funcione.']
-    # StopWords adicionadas em um vetor
-    stop_words = '', ''
-    vocabulario = processar_texto(e, stop_words, 'gram3')
-    return render_template('lista.html')
-
-
 if __name__ == "__main__":
     # rodar app no local host(host='0.0.0.0', port=80,debug=True)
     # ter apenas 1 servidor respodendo na porta 80
-    #string de connecção com banco de dados nosql(atlas mongodb)
+    # string de connecção com banco de dados nosql(atlas mongodb)
     if(TEST_CONTROL == 0):
         client = MongoClient('mongodb+srv://master:668262az@world' +
-                            '0-o28vw.gcp.mongodb.net/cinnecta?retry' +
-                            'Writes=true&w=majority')
+                             '0-o28vw.gcp.mongodb.net/cinnecta?retry' +
+                             'Writes=true&w=majority')
         db = client.cinnecta
-        # tests(0,"db"+str(db))
+        tests(2,"db"+str(db))
         collection = db['words']
-        # tests(0,"colection"+str(collection))
-    myapp.run()
+        tests(2,"colection"+str(collection))
+    myapp.run(debug=True)
