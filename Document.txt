@@ -6,4 +6,4 @@ pip3 install pymongo # database nosql
 pip3 install pymongo[srv] # dnspy
 python -c "import ssl; print(getattr(ssl, 'HAS_SNI', False))" # True
 openssl version # 1.0>
-
+pip install random-object-id
