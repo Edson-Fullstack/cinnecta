@@ -8,7 +8,8 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from bson import json_util
 from datetime import datetime
-import string, random
+import string
+import random
 
 # esta varialvel e funcão controlam o debug passo a passo no ambiente de testes
 # 0=clean compile
@@ -229,17 +230,18 @@ def processar_texto(textos, stop_words, gramatica):
     vocabulario, vector = gerar_listas_simples(textos, stop_words, gramatica)
     # gerar teste com resultados da parte 1
     contagem = contar(vector, vocabulario, gramatica)
-    
-    tests(0,"items:"+str(collection.find_one()))
-   
-    key=''.join(random.sample(string.ascii_lowercase, 12))
-    item={}
-    # usando um gerador automatico de keys. Porem o ideal seria utilizar as entradas para formar testes unicos
-    # tentar implementar usando time
-    # key=datetime.utcnow()
-    item['_id']=ObjectId(b''+bytes(key,encoding='utf8'))
-    item['content']=str(vocabulario)
-    collection.insert_one(item)
+    if(TEST_CONTROL == 0):
+        key = ''.join(random.sample(string.ascii_lowercase, 12))
+        item = {}
+        # usando um gerador automatico de keys. Porem o ideal seria utilizar
+        # as entradas para formar testes unicos
+        # tentar implementar usando time
+        # key=datetime.utcnow()
+        item['_id'] = ObjectId(b'' + bytes(key, encoding='utf8'))
+        item['content'] = str(vocabulario)
+        collection.insert_one(item)
+        tests(0, "items:"+str(collection.count()))
+        tests(0, "items:"+str(collection.find()))
     return
 
 
@@ -300,9 +302,13 @@ def gramatica3():
 if __name__ == "__main__":
     # rodar app no local host(host='0.0.0.0', port=80,debug=True)
     # ter apenas 1 servidor respodendo na porta 80
-    client = MongoClient('mongodb+srv://master:668262az@world0-o28vw.gcp.mongodb.net/cinnecta?retryWrites=true&w=majority')
-    db = client.cinnecta
-    # tests(0,"db"+str(db))
-    collection = db['words']
-    # tests(0,"colection"+str(collection))
+    #string de connecção com banco de dados nosql(atlas mongodb)
+    if(TEST_CONTROL == 0):
+        client = MongoClient('mongodb+srv://master:668262az@world' +
+                            '0-o28vw.gcp.mongodb.net/cinnecta?retry' +
+                            'Writes=true&w=majority')
+        db = client.cinnecta
+        # tests(0,"db"+str(db))
+        collection = db['words']
+        # tests(0,"colection"+str(collection))
     myapp.run()
