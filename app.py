@@ -6,6 +6,13 @@ def tests(controle,mensagem):
     """mensagem a ser exibida no durante testes"""
     if(TEST_CONTROL>=controle):
         print(str(mensagem))
+
+def is_int(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
 #remove caracteres e retorna toda a string em lower case
 def remover_caracteres(old_string, to_remove):
     new_string = old_string
@@ -25,35 +32,41 @@ def contar_incidencia(vetor,vocabulario):
     dicionario=dict()
     for i in range(len(vetor)):
         for item in vocabulario:
-            key=vocabulario[item]+'-'+str(i+1)
+            key=str(i+1)+'-'+vocabulario[item]
             dicionario[key]=vetor[i].count(vocabulario[item])
     return dicionario
 
 def contar_incidencia2(vetores,vocabulario):
     dicionario=dict()
+    cont={}
     for i in range(len(vetores)):
            for j in range(len(vetores[i])-1):
-                key=vetores[i][j]+'-'+vetores[i][j+1]+'-'+str(i+1)
-                dicionario[str(key)]=str(0)
                 for k in vocabulario:
                     tests(2,'vetor:'+vetores[i][j]+' '+vetores[i][j+1])
                     tests(2,'vocabulario:'+vocabulario[k])
                     if(str(vetores[i][j]+' '+vetores[i][j+1])==str(vocabulario[k])):
-                        tests(0,str(i+1)+'----->'+str(vocabulario[k]));
-                        key=vetores[i][j]+'-'+vetores[i][j+1]+'-'+str(i+1)
+                        ky=str(i+1)+'-'+vetores[i][j]+' '+vetores[i][j+1]
+                        tests(2,str(i+1)+'----->'+str(vocabulario[k])+'K'+str(ky));
                         #dicionario[key]+=1
-                        if key in dicionario:
-                            value=dicionario.get(key)
-                            #tests(0,key)
-                            valor=int(value)+1
-                            tests(0,"valor Na Chave:"+str(value))
-                            tests(0,"valor Armazenar:"+str(valor))
-                            dicionario[str(key)]=str(valor)
-                            tests(0,"valor Armazenado:"+str(dicionario[str(key)]))
+                        if ky not in dicionario: 
+                            dicionario[str(ky)]=1
+                            tests(2,"Chave nao existe:-")
+                        else:
+                            value=dicionario[str(ky)]
+                            tests(2,"valor Armazenado:"+str(value))
+                            if(is_int(value)):
+                                value=int(value)+1
+                            else:
+                                value=0
+                            tests(2,"valor Tratado:"+str(value))
                             
-
-                            
-                            
+                            dicionario[str(ky)]=str(value)
+                            tests(2,"valor Na Chave:"+str(dicionario[str(ky)]))
+    for k in vocabulario:
+        for i in range(len(vetores)):
+            key=str(i+1)+'-'+vocabulario[k]
+            if key not in dicionario:
+                dicionario[key]=0                          
     return dicionario
 def contar_incidencia3(vetores,vocabulario):
     dicionario=dict()
