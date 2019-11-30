@@ -38,22 +38,31 @@ def contar(vetores,vocabulario,gramatica):
     if(gramatica=='gram2'):
         for i in range(len(vocabulario)):
             itens=vocabulario[i].split(' ')
-            k=vocabulario[i].replace(' ', '').replace('é','e')
-            tests(0,"vocabulario:"+str(vocabulario[i]))
-            key='texto'+str(i+1)+str(str(itens).split(" ,\'\\"))
+            k=vocabulario[i].replace(' ', '')
+            print('loop:'+str(i))
             for j in range(len(itens)):
-                tests(0,"item:"+str(itens[j]));
                 for ii in range(len(vetores)):
+                    key='texto'+str(ii+1)+str(k)
+                    if(i==0):
+                        tests(0,"key:"+str(key))
+                    #tests(0,"vocabulario:"+str(vocabulario[i]))
                     tests(0,'vetor:'+str(ii)+':'+str(vetores[ii]))
+                    tests(0,"item:"+str(itens[j]));
                     #tests(0,'item'+str(j)+':'+str(itens[j]))
-                    tests(0,vocabulario[j])
-                    key='texto'+str(ii)+k
-                    tests(0,"key:"+key)
-                    tests(0,vetores[ii].count(itens[j]))
-                    dicionario[str(key)]+=1
-    tests(0,"Incidencia:"+str(dicionario))
+                    tests(0,"valor Encontrado:"+str(vetores[ii].count(itens[j])))
+                    if key not in dicionario: 
+                        dicionario[str(key)]=vetores[ii].count(itens[j])
+                        tests(0,"valor Na Chave:0")
+                    else:
+                        value=dicionario.get(key)
+                        tests(0,"value:"+str(value))
+                        value=int(value)+vetores[ii].count(itens[j])
+                        dicionario[str(key)]=str(value)
+                        tests(0,"valor Na Chave:"+str(value))
+                    #tests(0,"Incidencia:"+str(dicionario))
+                    tests(0,"valor Total:"+str(dicionario[str(key)]))
     
-    tests(0,'Dicionario:'+str(dicionario)) 
+    tests(0,'DicionarioEnd'+str(len(dicionario))+':'+str(dicionario)) 
     return 
 
 #a partir do vetor contendo os textos retorna o vocabulario e os vetores contendo as palavras da frase
