@@ -1,7 +1,7 @@
 from flask import Flask , render_template
 
 #esta varialvel e funcão controlam o debug passo a passo no ambiente de testes
-TEST_CONTROL=0
+TEST_CONTROL=1
 def tests(controle,mensagem):
     """mensagem a ser exibida no durante testes"""
     if(TEST_CONTROL>=controle):
@@ -28,7 +28,28 @@ def contar_incidencia(vetor,vocabulario):
             key=vocabulario[item]+'-'+str(i+1)
             dicionario[key]=vetor[i].count(vocabulario[item])
     return dicionario
+
 def contar_incidencia2(vetores,vocabulario):
+    dicionario=dict()
+    for i in range(len(vetores)):
+           for j in range(len(vetores[i])-1):
+                key=vetores[i][j]+'-'+vetores[i][j+1]+'-'+str(i+1)
+                dicionario[str(key)]='0'
+                for k in vocabulario:
+                    tests(2,'vetor:'+vetores[i][j]+' '+vetores[i][j+1])
+                    tests(2,'vocabulario:'+vocabulario[k])
+                    if(str(vetores[i][j]+' '+vetores[i][j+1])==str(vocabulario[k])):
+                        tests(0,str(i+1)+'----->'+str(vocabulario[k]));
+                        key=vetores[i][j]+'-'+vetores[i][j+1]+'-'+str(i+1)
+                        #dicionario[key]+=1
+                        if key in dicionario: 
+                            value=dicionario.get(key)
+                            tests(2,"valor Armazenado:"+str(value))
+                            value=int(value)+1
+                            dicionario[str(key)]=str(value)
+                            tests(2,"valor Na Chave:"+str(value))
+    return dicionario
+def contar_incidencia3(vetores,vocabulario):
     dicionario=dict()
     for i in range(len(vocabulario)):
             itens=vocabulario[i].split(' ')
@@ -65,8 +86,10 @@ def contar(vetores,vocabulario,gramatica):
         dicionario=contar_incidencia(vetores,vocabulario)
     if(gramatica=='gram2'):
         dicionario=contar_incidencia2(vetores,vocabulario)
+    if(gramatica=='gram3'):
+        dicionario=contar_incidencia3(vetores,vocabulario)
     
-    tests(1,'Incidencia-[]'+str(len(dicionario))+']:'+str(dicionario)) 
+    tests(1,'Incidencia-['+str(len(dicionario))+']:'+str(dicionario)) 
     return 
 
 #a partir do vetor contendo os textos retorna o vocabulario e os vetores contendo as palavras da frase
@@ -89,10 +112,14 @@ def gerar_listas_simples(textos,stop_words,gramatica):
             alterar=0
         if(gramatica=="gram2"):
             alterar=-1
+        if(gramatica=="gram3"):
+            alterar=-1
         for item in range(len(vector[i])+alterar):
             if(gramatica=="gram1"):
                 analise=vector[i][item]
             if(gramatica=="gram2"):
+                analise=vector[i][item]+' '+vector[i][item+1]
+            if(gramatica=="gram3"):
                 analise=vector[i][item]+' '+vector[i][item+1]
             tests(2,'Analise:'+analise)
             #tratamento para eliminar stopwords e adicionar os elementos que nao se repetem
@@ -148,6 +175,15 @@ def gramatica2():
 
     return render_template('lista.html')
 
+@myapp.route("/gram3")
+def gramatica3():
+    #entrada esperada
+    e=['Falar é fácil. Mostre-me o código.','É fácil escrever código. Difícil é escrever código que funcione.']
+    #StopWords adicionadas em um vetor
+    stop_words='',''
+    vocabulario=processar_texto(e,stop_words,'gram3')
+
+    return render_template('lista.html')
 
 if __name__=="__main__":
     myapp.run()

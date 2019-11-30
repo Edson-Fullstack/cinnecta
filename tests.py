@@ -20,6 +20,11 @@ class TestPages(unittest.TestCase):
         app = myapp.test_client()
         response = app.get('/gram2')
         self.assertEqual(200, response.status_code)
+    
+    def test_page_gram3(self):
+        app = myapp.test_client()
+        response = app.get('/gram3')
+        self.assertEqual(200, response.status_code)
 
     #testa a pagina para o manual
     def test_page_manual(self):
