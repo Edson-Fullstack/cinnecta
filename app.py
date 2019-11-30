@@ -3,12 +3,17 @@ PEP 8 -- Style Guide for Python Resume
 pip8 app
 """
 from flask import Flask, render_template
+# database nosql
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from bson import json_util
+from datetime import datetime
 
 # esta varialvel e funcão controlam o debug passo a passo no ambiente de testes
 # 0=clean compile
 # 1=otput de processamentos
 # 2=processamento interno
-TEST_CONTROL = 0
+TEST_CONTROL = 1
 
 
 def tests(controle, mensagem):
@@ -162,7 +167,7 @@ def contar(vetores, vocabulario, gramatica):
 
 
 def gerar_listas_simples(textos, stop_words, gramatica):
-    apagar_caracteres = ',.!?-_%&#'
+    apagar_caracteres = ',.!?-_%&#[(<>)]'
     textoCompleto = str()
     vector = {}
     tests(1, textos)
@@ -223,6 +228,15 @@ def processar_texto(textos, stop_words, gramatica):
     vocabulario, vector = gerar_listas_simples(textos, stop_words, gramatica)
     # gerar teste com resultados da parte 1
     contagem = contar(vector, vocabulario, gramatica)
+    client = MongoClient('mongodb+srv://master:668262az@world0-o28vw.gcp.mongodb.net/cinnecta?retryWrites=true&w=majority')
+    db = client.cinnecta
+    #tests(0,"db"+str(db))
+    collection = db['words']
+    #tests(0,"colection"+str(collection))
+    tests(0,"items:"+str(collection.find_one()))
+    tests(0,vocabulario)
+    vocabulario['key']=ObjectId(b''+bytes(str(datetime.now()))+'')
+    collection.insert_one(vocabulario)
     return
 
 
@@ -281,4 +295,6 @@ def gramatica3():
 
 
 if __name__ == "__main__":
+    # rodar app no local host(host='0.0.0.0', port=80,debug=True)
+    # ter apenas 1 servidor respodendo na porta 80
     myapp.run()
