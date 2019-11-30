@@ -1,18 +1,21 @@
 from flask import Flask , render_template
 
 #esta varialvel e funcão controlam o debug passo a passo no ambiente de testes
-TEST_CONTROL=1
+TEST_CONTROL=0
 def tests(controle,mensagem):
     """mensagem a ser exibida no durante testes"""
     if(TEST_CONTROL>=controle):
         print(str(mensagem))
 
-def is_int(s):
+#verifica se um valor é inteiro
+def is_int(valor):
+    """valor a ser verificado """
     try: 
-        int(s)
+        int(valor)
         return True
     except ValueError:
         return False
+
 #remove caracteres e retorna toda a string em lower case
 def remover_caracteres(old_string, to_remove):
     new_string = old_string
@@ -20,15 +23,16 @@ def remover_caracteres(old_string, to_remove):
         new_string = new_string.replace(i, ' ')
     return new_string.lower()
 
-#tratamento para '-' de palavras compostas
+#tratamento subistituir string priciplamente para '-' de palavras compostas
 def substituir_caracteres(old_string, to_remove,to_replace):
     new_string = old_string
     for i in to_remove:
         new_string = new_string.replace(i, to_replace)
     return new_string.lower()
 
-
+#retorna dicionario contendo os vetores com quantas palavras se repetem na analise gramatical 1
 def contar_incidencia(vetor,vocabulario):
+    """entradas de vetores distitos de palavras e vocabulario formado """
     dicionario=dict()
     for i in range(len(vetor)):
         for item in vocabulario:
@@ -36,7 +40,10 @@ def contar_incidencia(vetor,vocabulario):
             dicionario[key]=vetor[i].count(vocabulario[item])
     return dicionario
 
+
+#retorna dicionario contendo os vetores com quantas palavras se repetem na analise gramatical 2
 def contar_incidencia2(vetores,vocabulario):
+    """entradas de vetores distitos de palavras e vocabulario formado """
     dicionario=dict()
     cont={}
     for i in range(len(vetores)):
@@ -68,7 +75,12 @@ def contar_incidencia2(vetores,vocabulario):
             if key not in dicionario:
                 dicionario[key]=0                          
     return dicionario
+
+
+#retorna dicionario contendo os vetores com quantas palavras se repetem na analise gramatical 3
+#inicialmente foi um erro de compreenção porem irei deixar por me parece util contar a incidencia de cada palavra independente nos vetores
 def contar_incidencia3(vetores,vocabulario):
+    """entradas de vetores distitos de palavras e vocabulario formado """
     dicionario=dict()
     for i in range(len(vocabulario)):
             itens=vocabulario[i].split(' ')
@@ -79,10 +91,8 @@ def contar_incidencia3(vetores,vocabulario):
                     key=str(k)+'-'+str(ii+1)
                     if(i==0):
                         tests(2,"key:"+str(key))
-                    #tests(0,"vocabulario:"+str(vocabulario[i]))
                     tests(2,'vetor:'+str(ii)+':'+str(vetores[ii]))
                     tests(2,"item:"+str(itens[j]));
-                    #tests(0,'item'+str(j)+':'+str(itens[j]))
                     tests(2,"valor Encontrado:"+str(vetores[ii].count(itens[j])))
                     if key not in dicionario: 
                         dicionario[str(key)]=vetores[ii].count(itens[j])
@@ -93,13 +103,13 @@ def contar_incidencia3(vetores,vocabulario):
                         value=int(value)+vetores[ii].count(itens[j])
                         dicionario[str(key)]=str(value)
                         tests(2,"valor Na Chave:"+str(value))
-                    #tests(0,"Incidencia:"+str(dicionario))
                     tests(2,"valor Total:"+str(dicionario[str(key)]))
     return dicionario
+
 #conta os elementos e armazena em um dicionario 
 #!utiliza como indice uma concatenação entre o indice do vetor e o item ao qual se esta procurando
 def contar(vetores,vocabulario,gramatica):
-
+    """divide a execução dependendo do tipo de gramatica """
     dicionario=dict()
     if(gramatica=='gram1'):
         dicionario=contar_incidencia(vetores,vocabulario)
@@ -111,6 +121,8 @@ def contar(vetores,vocabulario,gramatica):
     tests(1,'Incidencia-['+str(len(dicionario))+']:'+str(dicionario)) 
     return 
 
+#conta os elementos e armazena em um dicionario 
+#!utiliza como indice uma concatenação entre o indice do vetor e o item ao qual se esta procurando
 #a partir do vetor contendo os textos retorna o vocabulario e os vetores contendo as palavras da frase
 def gerar_listas_simples(textos,stop_words,gramatica):
     apagar_caracteres=',.!?-_%&#'
@@ -127,12 +139,14 @@ def gerar_listas_simples(textos,stop_words,gramatica):
         #retirar elementos vazios do vetor
         while('' in vector[i]):
             vector[i].remove('')
+        #dado tipo de gramatica alterar ate onde do vetor se ira percorer para evitar misscheck em possições fora do vetor
         if(gramatica=="gram1"):
             alterar=0
         if(gramatica=="gram2"):
             alterar=-1
         if(gramatica=="gram3"):
             alterar=-1
+        #dado o tipo de gramatica altera a forma de pegar as posições da lista de vocabulario
         for item in range(len(vector[i])+alterar):
             if(gramatica=="gram1"):
                 analise=vector[i][item]
@@ -170,10 +184,13 @@ myapp = Flask(__name__)
 @myapp.route("/")
 def cinnecta():
     return render_template('index.html')
+
+#manual de uso
 @myapp.route("/manual")
 def manual():
     return render_template('manual.html')
 
+#execução de gramatica 1
 @myapp.route("/gram1")
 def gramatica1():
     #entrada esperada
@@ -183,7 +200,8 @@ def gramatica1():
     vocabulario=processar_texto(e,stop_words,'gram1')
 
     return render_template('lista.html')
-        
+
+#execução de gramatica 2    
 @myapp.route("/gram2")
 def gramatica2():
     #entrada esperada
@@ -193,6 +211,7 @@ def gramatica2():
     vocabulario=processar_texto(e,stop_words,'gram2')
 
     return render_template('lista.html')
+#execução de gramatica 2(nova)
 
 @myapp.route("/gram3")
 def gramatica3():

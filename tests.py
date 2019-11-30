@@ -38,8 +38,5 @@ class TestPages(unittest.TestCase):
         response = app.get('/fail')
         self.assertEqual(404, response.status_code)
 
-
-
-
 if __name__ == '__main__':
     unittest.main()
