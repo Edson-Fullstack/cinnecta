@@ -34,7 +34,7 @@ def contar_incidencia2(vetores,vocabulario):
     for i in range(len(vetores)):
            for j in range(len(vetores[i])-1):
                 key=vetores[i][j]+'-'+vetores[i][j+1]+'-'+str(i+1)
-                dicionario[str(key)]='0'
+                dicionario[str(key)]=str(0)
                 for k in vocabulario:
                     tests(2,'vetor:'+vetores[i][j]+' '+vetores[i][j+1])
                     tests(2,'vocabulario:'+vocabulario[k])
@@ -42,12 +42,18 @@ def contar_incidencia2(vetores,vocabulario):
                         tests(0,str(i+1)+'----->'+str(vocabulario[k]));
                         key=vetores[i][j]+'-'+vetores[i][j+1]+'-'+str(i+1)
                         #dicionario[key]+=1
-                        if key in dicionario: 
+                        if key in dicionario:
                             value=dicionario.get(key)
-                            tests(2,"valor Armazenado:"+str(value))
-                            value=int(value)+1
-                            dicionario[str(key)]=str(value)
-                            tests(2,"valor Na Chave:"+str(value))
+                            #tests(0,key)
+                            valor=int(value)+1
+                            tests(0,"valor Na Chave:"+str(value))
+                            tests(0,"valor Armazenar:"+str(valor))
+                            dicionario[str(key)]=str(valor)
+                            tests(0,"valor Armazenado:"+str(dicionario[str(key)]))
+                            
+
+                            
+                            
     return dicionario
 def contar_incidencia3(vetores,vocabulario):
     dicionario=dict()
