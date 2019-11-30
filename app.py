@@ -25,44 +25,48 @@ def contar_incidencia(vetor,vocabulario):
     dicionario=dict()
     for i in range(len(vetor)):
         for item in vocabulario:
-            dicionario['texto'+str(i+1)+vocabulario[item]]=vetor[i].count(vocabulario[item])
+            key=vocabulario[item]+'-'+str(i+1)
+            dicionario[key]=vetor[i].count(vocabulario[item])
     return dicionario
-
+def contar_incidencia2(vetores,vocabulario):
+    dicionario=dict()
+    for i in range(len(vocabulario)):
+            itens=vocabulario[i].split(' ')
+            k=vocabulario[i].replace(' ', '-')
+            tests(2,'loop:'+str(i))
+            for ii in range(len(vetores)):
+                for j in range(len(itens)):
+                    key=str(k)+'-'+str(ii+1)
+                    if(i==0):
+                        tests(2,"key:"+str(key))
+                    #tests(0,"vocabulario:"+str(vocabulario[i]))
+                    tests(2,'vetor:'+str(ii)+':'+str(vetores[ii]))
+                    tests(2,"item:"+str(itens[j]));
+                    #tests(0,'item'+str(j)+':'+str(itens[j]))
+                    tests(2,"valor Encontrado:"+str(vetores[ii].count(itens[j])))
+                    if key not in dicionario: 
+                        dicionario[str(key)]=vetores[ii].count(itens[j])
+                        tests(2,"valor Na Chave:0")
+                    else:
+                        value=dicionario.get(key)
+                        tests(2,"valor Armazenado:"+str(value))
+                        value=int(value)+vetores[ii].count(itens[j])
+                        dicionario[str(key)]=str(value)
+                        tests(2,"valor Na Chave:"+str(value))
+                    #tests(0,"Incidencia:"+str(dicionario))
+                    tests(2,"valor Total:"+str(dicionario[str(key)]))
+    return dicionario
 #conta os elementos e armazena em um dicionario 
 #!utiliza como indice uma concatenação entre o indice do vetor e o item ao qual se esta procurando
 def contar(vetores,vocabulario,gramatica):
 
     dicionario=dict()
     if(gramatica=='gram1'):
-       dicionario=contar_incidencia(vetores,vocabulario)
+        dicionario=contar_incidencia(vetores,vocabulario)
     if(gramatica=='gram2'):
-        for i in range(len(vocabulario)):
-            itens=vocabulario[i].split(' ')
-            k=vocabulario[i].replace(' ', '')
-            print('loop:'+str(i))
-            for j in range(len(itens)):
-                for ii in range(len(vetores)):
-                    key='texto'+str(ii+1)+str(k)
-                    if(i==0):
-                        tests(0,"key:"+str(key))
-                    #tests(0,"vocabulario:"+str(vocabulario[i]))
-                    tests(0,'vetor:'+str(ii)+':'+str(vetores[ii]))
-                    tests(0,"item:"+str(itens[j]));
-                    #tests(0,'item'+str(j)+':'+str(itens[j]))
-                    tests(0,"valor Encontrado:"+str(vetores[ii].count(itens[j])))
-                    if key not in dicionario: 
-                        dicionario[str(key)]=vetores[ii].count(itens[j])
-                        tests(0,"valor Na Chave:0")
-                    else:
-                        value=dicionario.get(key)
-                        tests(0,"value:"+str(value))
-                        value=int(value)+vetores[ii].count(itens[j])
-                        dicionario[str(key)]=str(value)
-                        tests(0,"valor Na Chave:"+str(value))
-                    #tests(0,"Incidencia:"+str(dicionario))
-                    tests(0,"valor Total:"+str(dicionario[str(key)]))
+        dicionario=contar_incidencia2(vetores,vocabulario)
     
-    tests(0,'DicionarioEnd'+str(len(dicionario))+':'+str(dicionario)) 
+    tests(1,'Incidencia-[]'+str(len(dicionario))+']:'+str(dicionario)) 
     return 
 
 #a partir do vetor contendo os textos retorna o vocabulario e os vetores contendo as palavras da frase
@@ -102,7 +106,7 @@ def gerar_listas_simples(textos,stop_words,gramatica):
                 j=j+1
             else:
                 tests(2,'Remove:'+vector[i][item])
-    tests(0,'Vocabulario'+gramatica+'['+str(len(vocabulario))+']:'+str(vocabulario))
+    tests(1,'Vocabulario-'+gramatica+'['+str(len(vocabulario))+']:'+str(vocabulario))
     
     return vocabulario,vector
 
