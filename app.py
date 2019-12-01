@@ -2,7 +2,7 @@
 PEP 8 -- Style Guide for Python Resume
 pip8 app
 """
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for, request
 # database nosql
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -15,7 +15,7 @@ import random
 # 0=clean compile
 # 1=otput de processamentos
 # 2=processamento interno
-TEST_CONTROL = 1
+TEST_CONTROL = 0
 
 
 def tests(controle, mensagem):
@@ -127,7 +127,7 @@ def contar(vetores, vocabulario, gramatica):
         dicionario = contar_incidencia3(vetores, vocabulario)
 
     tests(1, 'Incidencia-[' + str(len(dicionario)) + ']:' + str(dicionario))
-    return
+    return dicionario
 
 # conta os elementos e armazena em um dicionario
 # !utiliza como indice uma concatenação entre o indice do vetor e o
@@ -193,7 +193,44 @@ def gerar_listas_simples(textos, stop_words, gramatica):
 def processar_texto(textos, stop_words, gramatica):
     vocabulario, vector = gerar_listas_simples(textos, stop_words, gramatica)
     # gerar teste com resultados da parte 1
-    contagem = contar(vector, vocabulario, gramatica)
+    dicionario = contar(vector, vocabulario, gramatica)
+    final={}
+    final['vocabulario'],final['vetor']=formatar_saida(vocabulario,vector,dicionario,gramatica)
+    inserir_bd(final)
+    return final
+
+def formatar_saida(vocabulario,vector,dicionario,gramatica):
+    vet=''
+    voc=''
+    for i in range(len(vector)):
+        voc='Vocabulario '+':['
+        vet=vet+'texto '+str(i+1)+':['
+        for k in vocabulario:
+            voc=voc+str(k+1)+'.'+str(vocabulario[k])+ ' '
+            key = str(i + 1) + '-' + vocabulario[k]
+            vet=vet+str(dicionario[key])
+            if(k<len(vocabulario)-1):
+                vet=vet+','
+            else:
+                vet=vet+']'
+    print(gramatica)
+    if(gramatica == "gram2"):
+        voc=voc+']'
+    return voc,vet
+
+
+def conectar_bd():
+    if(TEST_CONTROL == 0):
+        # string de connecção com banco de dados nosql(atlas mongodb)
+        client = MongoClient('mongodb+srv://master:668262az@world' +
+                             '0-o28vw.gcp.mongodb.net/cinnecta?retry' +
+                             'Writes=true&w=majority')
+        db = client.cinnecta
+        collection = db['words']
+        return collection
+
+def inserir_bd(conteudo):
+    collection=conectar_bd()
     if(TEST_CONTROL == 0):
         key = ''.join(random.sample(string.ascii_lowercase, 12))
         item = {}
@@ -202,85 +239,90 @@ def processar_texto(textos, stop_words, gramatica):
         # tentar implementar usando time
         # key=datetime.utcnow()
         item['_id'] = ObjectId(b'' + bytes(key, encoding='utf8'))
-        item['content'] = str(vocabulario)
+        item['content'] = str(conteudo)
         collection.insert_one(item)
-        tests(2, "items:"+str(collection.count()))
-        tests(2, "items:"+str(collection.find()))
-    return
 
+def show_db():
+    collection=conectar_bd()
+    retorno='Nenhum Banco de Dados funcional.'
+    if(TEST_CONTROL == 0):
+        items=collection.find()
+        retorno=str()
+        for item in items:
+            retorno=retorno+str(item)
+    return retorno
 
 myapp = Flask(__name__)
 
 
 # home page
 @myapp.route("/")
-def cinnecta():
+def home():
     return render_template('index.html')
 
+# home page
+@myapp.route("/prova")
+def prova():
+    return render_template('prova.html')
 
 # manual de uso
 @myapp.route("/manual")
 def manual():
     return render_template('manual.html')
 
+@myapp.route("/db")
+def db():
+    texto=dict()
+    texto['db']=show_db()
+    return render_template('database.html',texto=texto)
+
 
 # execução de gramatica 1
 # entrada como uma string onde as frases sao divididas por ,
 # utilizar outro dvisor para nao quebra sentidos de frases diferentes(|)
-@myapp.route("/gram1", defaults={'entrada': 'Falar é fácil. Mostre-me o ' +
+@myapp.route("/gram1", defaults={"enter": 'Falar é fácil. Mostre-me o ' +
                                             'código.|É fácil escrever código' +
                                             '. Difícil é escrever código que' +
                                             ' funcione.'})
-@myapp.route("/gram1/<entrada>")
-def gramatica1(entrada):
+@myapp.route("/gram1<enter>")
+def gramatica1(enter, methods=['GET', 'POST']):
     # entrada esperada
     # testes efeturado para evitar erro e=[''] e='' e=['',''] todos passam
     # e=False gera erro entao qualque entrada de dados que nao for puder ser
     # mensurada provavelmente ira gerar erro
-    e = ['Falar é fácil. Mostre-me o código.|É fácil escrever código.' +
-         ' Difícil é escrever código que funcione.']
-    if(type(entrada) == string and (entrada is None or entrada == '')):
-        e = ['Falar é fácil. Mostre-me o código.|' +
-             'É fácil escrever código. Difícil é escrever ' +
-             'código que funcione.']
-    else:
-        e = entrada.split('|')
+    if request.method == 'GET':
+        e=request.args['enter']
+    if len(e)==0:
+        e ='Falar é fácil. Mostre-me o código.|É fácil escrever código. Difícil é escrever código que funcione.'
+    e = e.split('|')
     # StopWords adicionadas em um vetor
     stop_words = '', ''
-    vocabulario = processar_texto(e, stop_words, 'gram1')
-    return render_template('lista.html')
+    textos = processar_texto(e, stop_words, 'gram1')
+    return render_template('lista.html',resultado=textos)
 
 
 # execução de gramatica 2
 @myapp.route("/gram2", defaults={'entrada': 'Falar é fácil. Mostre-me o ' +
                                  'código.|É fácil escrever código. Difícil é' +
                                  ' escrever código que funcione.'})
-@myapp.route("/gram2/<entrada>")
+@myapp.route("/gram2<entrada>")
 def gramatica2(entrada):
-    # entrada esperada
-    e = ['Falar é fácil. Mostre-me o código.|É fácil escrever código.' +
-         'Difícil é escrever código que funcione.']
-    if(type(entrada) == string and (entrada is None or entrada == '')):
-        e = ['Falar é fácil. Mostre-me o código.|É fácil escrever código.' +
-             'Difícil é escrever código que funcione.']
-    else:
-        e = entrada.split('|')
+   # entrada esperada
+    # testes efeturado para evitar erro e=[''] e='' e=['',''] todos passam
+    # e=False gera erro entao qualque entrada de dados que nao for puder ser
+    # mensurada provavelmente ira gerar erro
+    if request.method == 'GET':
+        e=request.args['enter']
+    if len(e)==0:
+        e ='Falar é fácil. Mostre-me o código.|É fácil escrever código. Difícil é escrever código que funcione.'
+    e = e.split('|')
     # StopWords adicionadas em um vetor
     stop_words = '', ''
-    vocabulario = processar_texto(e, stop_words, 'gram2')
-    return render_template('lista.html')
+    textos = processar_texto(e, stop_words, 'gram2')
+    return render_template('lista.html',resultado=textos)
 
 
 if __name__ == "__main__":
     # rodar app no local host(host='0.0.0.0', port=80,debug=True)
     # ter apenas 1 servidor respodendo na porta 80
-    # string de connecção com banco de dados nosql(atlas mongodb)
-    if(TEST_CONTROL == 0):
-        client = MongoClient('mongodb+srv://master:668262az@world' +
-                             '0-o28vw.gcp.mongodb.net/cinnecta?retry' +
-                             'Writes=true&w=majority')
-        db = client.cinnecta
-        #tests(2,"db"+str(db))
-        collection = db['words']
-        #tests(2,"colection"+str(collection))
     myapp.run(debug=True)

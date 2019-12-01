@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Prova</a>
+    <a class="navbar-brand" href="/">Prova</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -8,16 +8,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{url_for('home')}}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Prova</a>
+                <a class="nav-link" href="{{url_for('prova')}}">Prova</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Documentação</a>
+                <a class="nav-link" href="{{url_for('manual')}}">Documentação</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Banco De dados</a>
+                <a class="nav-link" href="{{url_for('db')}}">Banco De dados</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -25,9 +25,9 @@
                     Gramaticas
                 </a>
                 <div class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item bg-primary" href="/gram1">Gramatica 1</a>
+                    <a class="dropdown-item bg-primary" href="{{url_for('gramatica1')}}?enter=">Gramatica 1</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item bg-primary" href="/gram2">Gramatica 2</a>
+                    <a class="dropdown-item bg-primary" href="{{url_for('gramatica2')}}?enter=">Gramatica 2</a>
                 </div>
             </li>
         </ul>
