@@ -280,7 +280,7 @@ if __name__ == "__main__":
                              '0-o28vw.gcp.mongodb.net/cinnecta?retry' +
                              'Writes=true&w=majority')
         db = client.cinnecta
-        tests(2,"db"+str(db))
+        #tests(2,"db"+str(db))
         collection = db['words']
-        tests(2,"colection"+str(collection))
+        #tests(2,"colection"+str(collection))
     myapp.run(debug=True)
