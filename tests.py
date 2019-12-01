@@ -12,13 +12,13 @@ class TestPages(unittest.TestCase):
     # testa a pagina para o primeiro exercicio
     def test_page_gram1(self):
         app = myapp.test_client()
-        response = app.get('/gram1')
+        response = app.get('/gram1?enter=')
         self.assertEqual(200, response.status_code)
 
     # testa a pagina para o segundo exercicio exercicio
     def test_page_gram2(self):
         app = myapp.test_client()
-        response = app.get('/gram2')
+        response = app.get('/gram2?enter=')
         self.assertEqual(200, response.status_code)
 
     # testa a pagina para o manual

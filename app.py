@@ -15,7 +15,7 @@ import random
 # 0=clean compile
 # 1=otput de processamentos
 # 2=processamento interno
-TEST_CONTROL = 0
+TEST_CONTROL = 1
 
 
 def tests(controle, mensagem):
@@ -138,11 +138,10 @@ def contar(vetores, vocabulario, gramatica):
 
 def gerar_listas_simples(textos, stop_words, gramatica):
     apagar_caracteres = ',.!?-_%&#[(<>)]'
-    textoCompleto = str()
     vector = {}
-    tests(1, textos)
+    tests(1, 'textos:'+str(textos))
     vocabulario_set = set()
-    vocabulario = {}
+    vocabulario = dict()
     j = 0
     for i in range(len(textos)):
         # remove caracteres e tratamento de texto
@@ -192,13 +191,19 @@ def gerar_listas_simples(textos, stop_words, gramatica):
 # função principal para execução da primeira parte do exercicio
 def processar_texto(textos, stop_words, gramatica):
     vocabulario, vector = gerar_listas_simples(textos, stop_words, gramatica)
+    tests(1,'vocabulario:'+str(vocabulario))
     # gerar teste com resultados da parte 1
     dicionario = contar(vector, vocabulario, gramatica)
+    tests(1,'vetores:'+str(vector))
     final={}
     final['vocabulario'],final['vetor']=formatar_saida(vocabulario,vector,dicionario,gramatica)
+    tests(1,'Final:'+str(final))
+
     inserir_bd(final)
     return final
 
+#formata a saida para o formato desejado retornando o vocabulario
+#e os vetores concatenados
 def formatar_saida(vocabulario,vector,dicionario,gramatica):
     vet=''
     voc=''
@@ -213,12 +218,11 @@ def formatar_saida(vocabulario,vector,dicionario,gramatica):
                 vet=vet+','
             else:
                 vet=vet+']'
-    print(gramatica)
     if(gramatica == "gram2"):
         voc=voc+']'
     return voc,vet
 
-
+#conecta a um banco de dados
 def conectar_bd():
     if(TEST_CONTROL == 0):
         # string de connecção com banco de dados nosql(atlas mongodb)
@@ -229,6 +233,7 @@ def conectar_bd():
         collection = db['words']
         return collection
 
+#inseri os valores de resposta no banco de dados
 def inserir_bd(conteudo):
     collection=conectar_bd()
     if(TEST_CONTROL == 0):
