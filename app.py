@@ -10,16 +10,18 @@ from bson import json_util
 from datetime import datetime
 import string
 import random
-
 # esta varialvel e funcão controlam o debug passo a passo no ambiente de testes
 # 0=clean compile
 # 1=otput de processamentos
 # 2=processamento interno
 TEST_CONTROL = 0
+
+
 def tests(controle, mensagem):
     """mensagem a ser exibida no durante testes"""
     if(TEST_CONTROL >= controle):
         print(str(mensagem))
+
 
 # !supportes
 # conecta a um banco de dados
@@ -33,9 +35,10 @@ def conectar_bd():
         collection = db['words']
         return collection
 
+
 # inseri os valores de resposta no banco de dados
 def inserir_bd(conteudo):
-    
+
     if(TEST_CONTROL == 0):
         key = ''.join(random.sample(string.ascii_lowercase, 12))
         item = {}
@@ -46,24 +49,25 @@ def inserir_bd(conteudo):
         item['_id'] = ObjectId(b'' + bytes(key, encoding='utf8'))
         item['content'] = str(conteudo)
         collection.insert_one(item)
-#mostra os itens adicionados na base de dados ate o momento
+
+
+# mostra os itens adicionados na base de dados ate o momento
 def show_db():
-    retorno='Nenhum Banco de Dados funcional.'
+    retorno = 'Nenhum Banco de Dados funcional.'
     if(TEST_CONTROL == 0):
-        items=collection.find()
-        retorno=str()
+        items = collection.find()
+        retorno = str()
         for item in items:
-            retorno=retorno+str(item)
+            retorno = retorno + str(item)
     return retorno
 
 
-collection=conectar_bd()
-
+collection = conectar_bd()
 
 
 # verifica se um valor é inteiro
 def is_int(valor):
-    """valor a ser verificado """
+    # valor a ser verificado
     try:
         int(valor)
         return True
@@ -89,6 +93,7 @@ def substituir_caracteres(old_string, to_remove, to_replace):
 
 # retorna dicionario contendo os vetores com quantas palavras se repetem
 # na analise gramatical 1
+
 
 # !PRINCIPAIS
 def contar_incidencia(vetor, vocabulario):
@@ -223,36 +228,38 @@ def gerar_listas_simples(textos, stop_words, gramatica):
 
     return vocabulario, vector
 
-#formata a saida para o formato desejado retornando o vocabulario
-#e os vetores concatenados
-def formatar_saida(vocabulario,vector,dicionario,gramatica):
-    vet=''
-    voc=''
+
+# formata a saida para o formato desejado retornando o vocabulario
+# e os vetores concatenados
+def formatar_saida(vocabulario, vector, dicionario, gramatica):
+    vet = ''
+    voc = ''
     for i in range(len(vector)):
-        voc='Vocabulario '+':['
-        vet=vet+'texto '+str(i+1)+':['
+        voc = 'Vocabulario '+':['
+        vet = vet + 'texto ' + str(i + 1) + ':['
         for k in vocabulario:
-            voc=voc+str(k+1)+'.'+str(vocabulario[k])+ ' '
+            voc = voc + str(k + 1)+'.' + str(vocabulario[k]) + ' '
             key = str(i + 1) + '-' + vocabulario[k]
-            vet=vet+str(dicionario[key])
-            if(k<len(vocabulario)-1):
-                vet=vet+','
+            vet = vet + str(dicionario[key])
+            if(k < len(vocabulario)-1):
+                vet = vet + ','
             else:
-                vet=vet+']'
+                vet = vet + ']'
     if(gramatica == "gram2"):
-        voc=voc+']'
-    return voc,vet
+        voc = voc+']'
+    return voc, vet
+
 
 # função principal para execução da primeira parte do exercicio
 def processar_texto(textos, stop_words, gramatica):
     vocabulario, vector = gerar_listas_simples(textos, stop_words, gramatica)
-    tests(1,'vocabulario:'+str(vocabulario))
+    tests(1, 'vocabulario:'+str(vocabulario))
     # gerar teste com resultados da parte 1
     dicionario = contar(vector, vocabulario, gramatica)
-    tests(1,'vetores:'+str(vector))
-    final={}
-    final['vocabulario'],final['vetor']=formatar_saida(vocabulario,vector,dicionario,gramatica)
-    tests(1,'Final:'+str(final))
+    tests(1, 'vetores:'+str(vector))
+    final = {}
+    final['vocabulario'], final['vetor'] = formatar_saida(vocabulario, vector, dicionario, gramatica)
+    tests(1, 'Final:'+str(final))
 
     inserir_bd(final)
     return final
@@ -265,30 +272,33 @@ myapp = Flask(__name__)
 def home():
     return render_template('index.html')
 
+
 # home page
 @myapp.route("/prova")
 def prova():
     return render_template('prova.html')
+
 
 # manual de uso
 @myapp.route("/manual")
 def manual():
     return render_template('manual.html')
 
+
 @myapp.route("/db")
 def db():
-    texto=dict()
-    texto['db']=show_db()
-    return render_template('database.html',texto=texto)
+    texto = dict()
+    texto['db'] = show_db()
+    return render_template('database.html', texto=texto)
 
 
 # execução de gramatica 1
 # entrada como uma string onde as frases sao divididas por ,
 # utilizar outro dvisor para nao quebra sentidos de frases diferentes(|)
 @myapp.route("/gram1", defaults={"enter": 'Falar é fácil. Mostre-me o ' +
-                                            'código.|É fácil escrever código' +
-                                            '. Difícil é escrever código que' +
-                                            ' funcione.'})
+                                          'código.|É fácil escrever código' +
+                                          '. Difícil é escrever código que' +
+                                          ' funcione.'})
 @myapp.route("/gram1<enter>")
 def gramatica1(enter, methods=['GET', 'POST']):
     # entrada esperada
@@ -296,14 +306,15 @@ def gramatica1(enter, methods=['GET', 'POST']):
     # e=False gera erro entao qualque entrada de dados que nao for puder ser
     # mensurada provavelmente ira gerar erro
     if request.method == 'GET':
-        e=request.args['enter']
-    if len(e)==0:
-        e ='Falar é fácil. Mostre-me o código.|É fácil escrever código. Difícil é escrever código que funcione.'
+        e = request.args['enter']
+    if len(e) == 0:
+        e = 'Falar é fácil. Mostre-me o código.|É fácil escrever código.' +
+            ' Difícil é escrever código que funcione.'
     e = e.split('|')
     # StopWords adicionadas em um vetor
     stop_words = '', ''
     textos = processar_texto(e, stop_words, 'gram1')
-    return render_template('lista.html',resultado=textos)
+    return render_template('lista.html', resultado=textos)
 
 
 # execução de gramatica 2
@@ -312,19 +323,20 @@ def gramatica1(enter, methods=['GET', 'POST']):
                                  ' escrever código que funcione.'})
 @myapp.route("/gram2<entrada>")
 def gramatica2(entrada):
-   # entrada esperada
+    # entrada esperada
     # testes efeturado para evitar erro e=[''] e='' e=['',''] todos passam
     # e=False gera erro entao qualque entrada de dados que nao for puder ser
     # mensurada provavelmente ira gerar erro
     if request.method == 'GET':
-        e=request.args['enter']
-    if len(e)==0:
-        e ='Falar é fácil. Mostre-me o código.|É fácil escrever código. Difícil é escrever código que funcione.'
+        e = request.args['enter']
+    if len(e) == 0:
+        e = 'Falar é fácil. Mostre-me o código.|É fácil escrever código.' +
+            'Difícil é escrever código que funcione.'
     e = e.split('|')
     # StopWords adicionadas em um vetor
     stop_words = '', ''
     textos = processar_texto(e, stop_words, 'gram2')
-    return render_template('lista.html',resultado=textos)
+    return render_template('lista.html', resultado=textos)
 
 
 if __name__ == "__main__":
