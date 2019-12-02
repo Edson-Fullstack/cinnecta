@@ -308,8 +308,7 @@ def gramatica1(enter, methods=['GET', 'POST']):
     if request.method == 'GET':
         e = request.args['enter']
     if len(e) == 0:
-        e = 'Falar é fácil. Mostre-me o código.|É fácil escrever código.' +
-            ' Difícil é escrever código que funcione.'
+        e = 'Falar é fácil. Mostre-me o código.|É fácil escrever código. Difícil é escrever código que funcione.'
     e = e.split('|')
     # StopWords adicionadas em um vetor
     stop_words = '', ''
