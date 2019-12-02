@@ -1,0 +1,168 @@
+{ 
+    "_id" : ObjectId("68646b7863697a6d6c727462"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto1:[1,1,1,1,1,1,1,0,0,0,0]texto2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("657a6c786373667161707262"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto1:[1,1,1,1,1,1,1,0,0,0,0]texto2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("72686e75766c62706b7a746f"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto1:[1,1,1,1,1,1,1,0,0,0,0]texto2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6d7569657477637661677873"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto1:[1,1,1,1,1,1,1,0,0,0,0]texto2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("7a676c6f7163706872767873"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ', 'vetor': 'texto1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("7a69616679687565766d7374"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto1:[1,1,1,1,1,1,1,0,0,0,0]texto2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("636e777162666c7075616772"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ', 'vetor': 'texto1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto2:[0,1,0,0,0,0,1,2,1,1,1,1,1]]'}"
+}
+{ 
+    "_id" : ObjectId("6668637a73756276696f726c"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ', 'vetor': 'texto1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto2:[0,1,0,0,0,0,1,2,1,1,1,1,1]]'}"
+}
+{ 
+    "_id" : ObjectId("776d6c71697a63796b736778"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ', 'vetor': 'texto1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto2:[0,1,0,0,0,0,1,2,1,1,1,1,1]]'}"
+}
+{ 
+    "_id" : ObjectId("716179736a636f707566696c"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6c79687a7170677265646e6b"), 
+    "content" : "{'vocabulario': 'Vocabulario:[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6b6f77657869717663677375"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("7473776179726b6d6e756878"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("667a756f6778766865646d72"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("786c756164687a676b6f6d74"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6a65687a707964626b76716d"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("786774726c69756a79647a61"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6b7368677062717763796d6c"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("7467647770757166616d6a6c"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("79646d61747a72626b6f6775"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6a77727871766470676b7a63"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("65796e626c68637873776472"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6c61646f707276627477676b"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6473686766776b6171636d62"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("69776d6f6c7564706e67736b"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6e686c63776d7267757a716b"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6667696e786a687362756476"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6e786575746f726c6a766873"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6b6f6374726c646a6e616d65"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("67746d757a776e7963616b6c"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("777871657470696a6e636466"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("7465776b7a78636e676a7371"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6863746c6d647579706b6e76"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("70716d636a627a6873746478"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6c746575726479626e6f6977"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6b6577676974626c7a6f646e"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione ', 'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("72666571706368627a79746c"), 
+    "content" : "{'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]', 'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]'}"
+}
+{ 
+    "_id" : ObjectId("6f666372686e6165716c7964"), 
+    "content" : "{'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]', 'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione '}"
+}
+{ 
+    "_id" : ObjectId("7265686a6d717076797a696b"), 
+    "content" : "{'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]', 'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]'}"
+}
+{ 
+    "_id" : ObjectId("68676d6f6572777173757966"), 
+    "content" : "{'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]', 'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione '}"
+}
+{ 
+    "_id" : ObjectId("657a706a6b73696266746471"), 
+    "content" : "{'vetor': 'texto 1:[1,1,1,1,1,1,0,0,0,0,0,0,0]texto 2:[0,1,0,0,0,0,1,2,1,1,1,1,1]', 'vocabulario': 'Vocabulario :[1.falar é 2.é fácil 3.fácil mostre 4.mostre me 5.me o 6.o código 7.fácil escrever 8.escrever código 9.código difícil 10.difícil é 11.é escrever 12.código que 13.que funcione ]'}"
+}
+{ 
+    "_id" : ObjectId("6b7772786266636c74617964"), 
+    "content" : "{'vetor': 'texto 1:[1,1,1,1,1,1,1,0,0,0,0]texto 2:[0,2,1,0,0,0,2,2,1,1,1]', 'vocabulario': 'Vocabulario :[1.falar 2.é 3.fácil 4.mostre 5.me 6.o 7.código 8.escrever 9.difícil 10.que 11.funcione '}"
+}
