@@ -342,4 +342,4 @@ def gramatica2(entrada):
 if __name__ == "__main__":
     # rodar app no local host(host='0.0.0.0', port=80,debug=True)
     # ter apenas 1 servidor respodendo na porta 80
-    myapp.run(debug=True)
+    myapp.run(host='0.0.0.0', port=80,debug=True)
