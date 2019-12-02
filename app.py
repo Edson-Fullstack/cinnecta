@@ -15,17 +15,53 @@ import random
 # 0=clean compile
 # 1=otput de processamentos
 # 2=processamento interno
-TEST_CONTROL = 1
-
-
+TEST_CONTROL = 0
 def tests(controle, mensagem):
     """mensagem a ser exibida no durante testes"""
     if(TEST_CONTROL >= controle):
         print(str(mensagem))
 
+# !supportes
+# conecta a um banco de dados
+def conectar_bd():
+    if(TEST_CONTROL == 0):
+        # string de connecção com banco de dados nosql(atlas mongodb)
+        client = MongoClient('mongodb+srv://master:668262az@world' +
+                             '0-o28vw.gcp.mongodb.net/cinnecta?retry' +
+                             'Writes=true&w=majority')
+        db = client.cinnecta
+        collection = db['words']
+        return collection
+
+# inseri os valores de resposta no banco de dados
+def inserir_bd(conteudo):
+    
+    if(TEST_CONTROL == 0):
+        key = ''.join(random.sample(string.ascii_lowercase, 12))
+        item = {}
+        # usando um gerador automatico de keys. Porem o ideal seria utilizar
+        # as entradas para formar testes unicos
+        # tentar implementar usando time
+        # key=datetime.utcnow()
+        item['_id'] = ObjectId(b'' + bytes(key, encoding='utf8'))
+        item['content'] = str(conteudo)
+        collection.insert_one(item)
+#mostra os itens adicionados na base de dados ate o momento
+def show_db():
+    retorno='Nenhum Banco de Dados funcional.'
+    if(TEST_CONTROL == 0):
+        items=collection.find()
+        retorno=str()
+        for item in items:
+            retorno=retorno+str(item)
+    return retorno
+
+
+collection=conectar_bd()
+
+
+
 # verifica se um valor é inteiro
-
-
 def is_int(valor):
     """valor a ser verificado """
     try:
@@ -54,7 +90,7 @@ def substituir_caracteres(old_string, to_remove, to_replace):
 # retorna dicionario contendo os vetores com quantas palavras se repetem
 # na analise gramatical 1
 
-
+# !PRINCIPAIS
 def contar_incidencia(vetor, vocabulario):
     """entradas de vetores distitos de palavras e vocabulario formado """
     dicionario = dict()
@@ -187,21 +223,6 @@ def gerar_listas_simples(textos, stop_words, gramatica):
 
     return vocabulario, vector
 
-
-# função principal para execução da primeira parte do exercicio
-def processar_texto(textos, stop_words, gramatica):
-    vocabulario, vector = gerar_listas_simples(textos, stop_words, gramatica)
-    tests(1,'vocabulario:'+str(vocabulario))
-    # gerar teste com resultados da parte 1
-    dicionario = contar(vector, vocabulario, gramatica)
-    tests(1,'vetores:'+str(vector))
-    final={}
-    final['vocabulario'],final['vetor']=formatar_saida(vocabulario,vector,dicionario,gramatica)
-    tests(1,'Final:'+str(final))
-
-    inserir_bd(final)
-    return final
-
 #formata a saida para o formato desejado retornando o vocabulario
 #e os vetores concatenados
 def formatar_saida(vocabulario,vector,dicionario,gramatica):
@@ -222,40 +243,19 @@ def formatar_saida(vocabulario,vector,dicionario,gramatica):
         voc=voc+']'
     return voc,vet
 
-#conecta a um banco de dados
-def conectar_bd():
-    if(TEST_CONTROL == 0):
-        # string de connecção com banco de dados nosql(atlas mongodb)
-        client = MongoClient('mongodb+srv://master:668262az@world' +
-                             '0-o28vw.gcp.mongodb.net/cinnecta?retry' +
-                             'Writes=true&w=majority')
-        db = client.cinnecta
-        collection = db['words']
-        return collection
+# função principal para execução da primeira parte do exercicio
+def processar_texto(textos, stop_words, gramatica):
+    vocabulario, vector = gerar_listas_simples(textos, stop_words, gramatica)
+    tests(1,'vocabulario:'+str(vocabulario))
+    # gerar teste com resultados da parte 1
+    dicionario = contar(vector, vocabulario, gramatica)
+    tests(1,'vetores:'+str(vector))
+    final={}
+    final['vocabulario'],final['vetor']=formatar_saida(vocabulario,vector,dicionario,gramatica)
+    tests(1,'Final:'+str(final))
 
-#inseri os valores de resposta no banco de dados
-def inserir_bd(conteudo):
-    collection=conectar_bd()
-    if(TEST_CONTROL == 0):
-        key = ''.join(random.sample(string.ascii_lowercase, 12))
-        item = {}
-        # usando um gerador automatico de keys. Porem o ideal seria utilizar
-        # as entradas para formar testes unicos
-        # tentar implementar usando time
-        # key=datetime.utcnow()
-        item['_id'] = ObjectId(b'' + bytes(key, encoding='utf8'))
-        item['content'] = str(conteudo)
-        collection.insert_one(item)
-
-def show_db():
-    collection=conectar_bd()
-    retorno='Nenhum Banco de Dados funcional.'
-    if(TEST_CONTROL == 0):
-        items=collection.find()
-        retorno=str()
-        for item in items:
-            retorno=retorno+str(item)
-    return retorno
+    inserir_bd(final)
+    return final
 
 myapp = Flask(__name__)
 

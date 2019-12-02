@@ -1,5 +1,5 @@
 sudo apt-get install python3
-sudo apt-get install pip3
+sudo apt-get install python3-pip
 pip3 install Flask  # /home/edson/.local/bin
 pip3 install pep8 # checar codigo
 pip3 install pymongo # database nosql
